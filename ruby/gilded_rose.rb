@@ -1,4 +1,4 @@
-require_relative 'item'
+require_relative './item'
 
 class GildedRose
 
@@ -8,49 +8,30 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
+      item.sell_in -= 1 if item.sell_in > 0
+
+      case item.name
+      when "Aged Brie"
+        item.quality += 1 if item.quality < 50
+      when "Backstage passes to a TAFKAL80ETC concert"
+        if item.quality < 50
+          if item.sell_in.between?(6, 10)
+            item.quality += 2
+          elsif item.sell_in.between?(1, 5)
+            item.quality += 3
+          elsif item.sell_in = 0
+            item.quality = 0
           end
         end
+      when "Sulfuras, Hand of Ragnaros"
+        item.quality = item.quality if item.quality < 50
       else
-        if item.quality < 50 #quality value + QV never more than 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
+        if item.quality.between?(1, 50)
+          item.sell_in > 0 ? item.quality -= 1 : item.quality -= 2
         end
       end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
-      end
+
     end
   end
+
 end
