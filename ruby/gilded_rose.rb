@@ -1,7 +1,9 @@
-class GildedRose #don't change
+require_relative 'item'
+
+class GildedRose
 
   def initialize(items)
-    @items = items #don't change
+    @items = items
   end
 
   def update_quality()
@@ -13,7 +15,7 @@ class GildedRose #don't change
           end
         end
       else
-        if item.quality < 50
+        if item.quality < 50 #quality value + QV never more than 50
           item.quality = item.quality + 1
           if item.name == "Backstage passes to a TAFKAL80ETC concert"
             if item.sell_in < 11
@@ -50,19 +52,5 @@ class GildedRose #don't change
         end
       end
     end
-  end
-end
-
-class Item
-  attr_accessor :name, :sell_in, :quality
-
-  def initialize(name, sell_in, quality)
-    @name = name
-    @sell_in = sell_in
-    @quality = quality
-  end
-
-  def to_s()
-    "#{@name}, #{@sell_in}, #{@quality}"
   end
 end
