@@ -1,7 +1,7 @@
-class GildedRose
+class GildedRose #don't change
 
   def initialize(items)
-    @items = items
+    @items = items #don't change
   end
 
   def update_quality()
