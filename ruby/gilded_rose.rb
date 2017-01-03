@@ -26,31 +26,4 @@ class GildedRose
     end
   end
 
-
-  def aged_brie(item)
-    item.quality += 1 if item.quality < 50
-  end
-
-  def backstage_passes(item)
-    if item.quality < 50
-      if item.sell_in.between?(6, 10)
-        item.quality += 2
-      elsif item.sell_in.between?(1, 5)
-        item.quality += 3
-      else item.sell_in = 0
-        item.quality = 0
-      end
-    end
-  end
-
-  def sulfuras(item)
-    item.quality = item.quality if item.quality < 50
-  end
-
-  def other_item(item)
-    if item.quality.between?(1, 50)
-      item.sell_in > 0 ? item.quality -= 1 : item.quality -= 2
-    end
-  end
-
 end
